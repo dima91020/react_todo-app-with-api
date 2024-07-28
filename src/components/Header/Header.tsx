@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-import { useTodos } from '../../TodoContext';
+import { useTodos } from '../../TodosContext';
 import { USER_ID } from '../../api/todos';
 
 export const Header: React.FC = () => {

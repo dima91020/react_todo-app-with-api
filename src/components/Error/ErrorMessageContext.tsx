@@ -5,7 +5,9 @@ import {
 } from '../../types/ContextValues';
 
 /* eslint-disable */
-export const ErrorMessageContext = createContext<(ErrorMessageContextValue & ErrorMessageContextHandlers) | null>(null);
+export const ErrorMessageContext = createContext<
+  (ErrorMessageContextValue & ErrorMessageContextHandlers) | null
+>(null);
 /* eslint-enable */
 
 type Props = {

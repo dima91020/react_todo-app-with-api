@@ -7,7 +7,7 @@ import { TodoList } from './components/TodoList';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ErrorMessage } from './components/Error';
-import { TodoProvider } from './TodoContext';
+import { TodoProvider } from './TodosContext';
 import { ErrorProvider } from './components/Error/ErrorMessageContext';
 
 export const App: React.FC = () => {

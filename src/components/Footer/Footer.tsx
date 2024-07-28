@@ -1,7 +1,7 @@
 import React from 'react';
 import { FilterStatus } from '../../types/FilterStatus';
 import cn from 'classnames';
-import { useTodos } from '../../TodoContext';
+import { useTodos } from '../../TodosContext';
 
 export const Footer: React.FC = () => {
   const { todos, filterStatus, handleDeleteTodo, handleChangeFilterStatus } =

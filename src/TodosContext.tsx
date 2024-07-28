@@ -14,8 +14,11 @@ import { Errors } from './constants/Errors';
 import { FilterStatus } from './types/FilterStatus';
 import { useErrorMessage } from './components/Error/ErrorMessageContext';
 
-// eslint-disable-next-line
-export const TodosContext = createContext<(TodosContextValue & TodoContextHandlers) | null>(null);
+/* eslint-disable */
+export const TodosContext = createContext<
+  (TodosContextValue & TodoContextHandlers) | null
+>(null);
+/* eslint-enable */
 
 const getFilteredTodos = (todos: Todo[], status: FilterStatus): Todo[] => {
   const visibleTodos = [...todos];
