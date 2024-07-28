@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
 import {
   ErrorMessageContextValue,
-  ErrorMessageApiContextValue,
+  ErrorMessageContextHandlers,
 } from '../../types/ContextValues';
 
 /* eslint-disable */
-export const ErrorMessageContext = createContext<ErrorMessageContextValue | null>(null);
-export const ErrorApiContext = createContext<ErrorMessageApiContextValue | null>(null);
+export const ErrorMessageContext = createContext<(ErrorMessageContextValue & ErrorMessageContextHandlers) | null>(null);
 /* eslint-enable */
 
 type Props = {
@@ -32,19 +31,14 @@ export const ErrorProvider: React.FC<Props> = ({ children }) => {
   const errorValue = {
     errorMessage,
     sendError: isSendError,
-  };
-
-  const apiValue = {
     handleErrorMessageSend,
     handleErrorMessageClear,
   };
 
   return (
-    <ErrorApiContext.Provider value={apiValue}>
-      <ErrorMessageContext.Provider value={errorValue}>
-        {children}
-      </ErrorMessageContext.Provider>
-    </ErrorApiContext.Provider>
+    <ErrorMessageContext.Provider value={errorValue}>
+      {children}
+    </ErrorMessageContext.Provider>
   );
 };
 
@@ -53,16 +47,6 @@ export const useErrorMessage = () => {
 
   if (!value) {
     throw new Error('Something is wrong with provider ErrorMessageContext');
-  }
-
-  return value;
-};
-
-export const useErrorApi = () => {
-  const value = useContext(ErrorApiContext);
-
-  if (!value) {
-    throw new Error('Something is wrong with provider ErrorApiContext');
   }
 
   return value;

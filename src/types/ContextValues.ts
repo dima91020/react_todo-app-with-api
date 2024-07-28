@@ -17,7 +17,17 @@ export type TodosContextValue = {
   filteredTodos: Todo[];
   tempTodo: TempTodo;
   filterStatus: FilterStatus;
+  isLoading: number[];
   isSubmitting: boolean;
+};
+
+export type TodoContextHandlers = {
+  handleCreateTodo: HandleCreateTodo;
+  handleDeleteTodo: HandleDeleteTodo;
+  handleUpdateTodo: HandleUpdateTodo;
+  handleToggleComplete: HandleToggleComplete;
+  handleToggleAllComplete: HandleToggleAllComplete;
+  handleChangeFilterStatus: HandleChangeFilterStatus;
 };
 
 export type ErrorMessageContextValue = {
@@ -25,16 +35,7 @@ export type ErrorMessageContextValue = {
   sendError: boolean;
 };
 
-export type ErrorMessageApiContextValue = {
+export type ErrorMessageContextHandlers = {
   handleErrorMessageSend: HandleErrorMessageSend;
   handleErrorMessageClear: HandleErrorMessageClear;
-};
-
-export type TodoActionsContextValue = {
-  handleCreateTodo: HandleCreateTodo;
-  handleDeleteTodo: HandleDeleteTodo;
-  handleUpdateTodo: HandleUpdateTodo;
-  handleToggleComplete: HandleToggleComplete;
-  handleToggleAllComplete: HandleToggleAllComplete;
-  handleChangeFilterStatus: HandleChangeFilterStatus;
 };

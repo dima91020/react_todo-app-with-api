@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react';
 import classNames from 'classnames';
-import { useErrorApi, useErrorMessage } from './ErrorMessageContext';
+import { useErrorMessage } from './ErrorMessageContext';
 
 export const ErrorMessage = () => {
-  const { errorMessage, sendError } = useErrorMessage();
-  const { handleErrorMessageClear } = useErrorApi();
+  const { errorMessage, sendError, handleErrorMessageClear } =
+    useErrorMessage();
 
   const handleErrorClear = useCallback(() => {
     handleErrorMessageClear();

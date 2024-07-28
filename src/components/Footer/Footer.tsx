@@ -1,11 +1,11 @@
 import React from 'react';
 import { FilterStatus } from '../../types/FilterStatus';
 import cn from 'classnames';
-import { useTodoActions, useTodos } from '../../TodoContext';
+import { useTodos } from '../../TodoContext';
 
 export const Footer: React.FC = () => {
-  const { todos, filterStatus } = useTodos();
-  const { handleDeleteTodo, handleChangeFilterStatus } = useTodoActions();
+  const { todos, filterStatus, handleDeleteTodo, handleChangeFilterStatus } =
+    useTodos();
 
   const leftTodos = todos.filter(todo => !todo.completed).length;
   const completedTodos = todos.some(todo => todo.completed);
@@ -24,40 +24,20 @@ export const Footer: React.FC = () => {
             {leftTodos} items left
           </span>
 
-          {/* Active link should have the 'selected' class */}
           <nav className="filter" data-cy="Filter">
-            <a
-              href="#/"
-              className={cn('filter__link', {
-                selected: filterStatus === FilterStatus.all,
-              })}
-              data-cy="FilterLinkAll"
-              onClick={() => handleChangeFilterStatus(FilterStatus.all)}
-            >
-              All
-            </a>
-
-            <a
-              href="#/active"
-              className={cn('filter__link', {
-                selected: filterStatus === FilterStatus.active,
-              })}
-              data-cy="FilterLinkActive"
-              onClick={() => handleChangeFilterStatus(FilterStatus.active)}
-            >
-              Active
-            </a>
-
-            <a
-              href="#/completed"
-              className={cn('filter__link', {
-                selected: filterStatus === FilterStatus.completed,
-              })}
-              data-cy="FilterLinkCompleted"
-              onClick={() => handleChangeFilterStatus(FilterStatus.completed)}
-            >
-              Completed
-            </a>
+            {Object.values(FilterStatus).map(filters => (
+              <a
+                key={filters}
+                href="#/"
+                className={cn('filter__link', {
+                  selected: filterStatus === filters,
+                })}
+                data-cy={`FilterLink${filters}`}
+                onClick={() => handleChangeFilterStatus(filters)}
+              >
+                {filters}
+              </a>
+            ))}
           </nav>
 
           {/* this button should be disabled if there are no completed todos */}

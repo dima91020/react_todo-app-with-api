@@ -2,9 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Todo } from '../../types/Todo';
 import cn from 'classnames';
 import { USER_ID } from '../../api/todos';
-import { useTodoActions } from '../../TodoContext';
-// import { Errors } from '../../constants/Errors';
-// import { useErrorNotificationApi } from '../Error/ErrorContext';
+import { useTodos } from '../../TodoContext';
 
 type Props = {
   todo: Todo;
@@ -14,9 +12,8 @@ type Props = {
 
 export const TodoItem: React.FC<Props> = ({ todo, isProcessed }) => {
   const { title, id, completed } = todo;
-  //eslint-disable-next-line
   const { handleDeleteTodo, handleUpdateTodo, handleToggleComplete } =
-    useTodoActions();
+    useTodos();
   const [newTitle, setNewTitle] = useState('');
   const [isEditinigTitle, setIsEditinigTitle] = useState<boolean>(false);
 

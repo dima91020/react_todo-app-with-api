@@ -9,20 +9,13 @@ import React, {
 import { Todo } from './types/Todo';
 import { getTodos } from './api/todos';
 import * as todoService from './api/todos';
-import {
-  TodoActionsContextValue,
-  TodosContextValue,
-} from './types/ContextValues';
+import { TodoContextHandlers, TodosContextValue } from './types/ContextValues';
 import { Errors } from './constants/Errors';
-// eslint-disable-next-line
-import { useErrorApi } from './components/Error/ErrorMessageContext';
 import { FilterStatus } from './types/FilterStatus';
+import { useErrorMessage } from './components/Error/ErrorMessageContext';
 
-export const TodosContext = createContext<TodosContextValue | null>(null);
 // eslint-disable-next-line
-export const TodosApiContext =
-  React.createContext<TodoActionsContextValue | null>(null);
-export const TodosLoadingContext = createContext<number[] | null>(null);
+export const TodosContext = createContext<(TodosContextValue & TodoContextHandlers) | null>(null);
 
 const getFilteredTodos = (todos: Todo[], status: FilterStatus): Todo[] => {
   const visibleTodos = [...todos];
@@ -49,7 +42,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
   const [filterStatus, setFilterStatus] = useState(FilterStatus.all);
   const [isLoading, setIsLoading] = useState<number[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { handleErrorMessageSend } = useErrorApi();
+  const { handleErrorMessageSend } = useErrorMessage();
 
   const filteredTodos = getFilteredTodos(todos, filterStatus);
 
@@ -224,13 +217,8 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
       filteredTodos,
       tempTodo,
       filterStatus,
+      isLoading,
       isSubmitting,
-    }),
-    [todos, filteredTodos, tempTodo, filterStatus, isSubmitting],
-  );
-
-  const apiValue = useMemo(
-    () => ({
       handleCreateTodo,
       handleDeleteTodo,
       handleUpdateTodo,
@@ -239,6 +227,12 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
       handleChangeFilterStatus,
     }),
     [
+      todos,
+      filteredTodos,
+      tempTodo,
+      filterStatus,
+      isLoading,
+      isSubmitting,
       handleCreateTodo,
       handleDeleteTodo,
       handleUpdateTodo,
@@ -263,13 +257,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   return (
-    <TodosApiContext.Provider value={apiValue}>
-      <TodosLoadingContext.Provider value={isLoading}>
-        <TodosContext.Provider value={todosValue}>
-          {children}
-        </TodosContext.Provider>
-      </TodosLoadingContext.Provider>
-    </TodosApiContext.Provider>
+    <TodosContext.Provider value={todosValue}>{children}</TodosContext.Provider>
   );
 };
 
@@ -278,26 +266,6 @@ export const useTodos = () => {
 
   if (!value) {
     throw new Error('Something is wrong with provider TodosContext');
-  }
-
-  return value;
-};
-
-export const useTodoActions = () => {
-  const value = useContext(TodosApiContext);
-
-  if (!value) {
-    throw new Error('Something is wrong with provider TodosApiContext');
-  }
-
-  return value;
-};
-
-export const useLoadingTodos = () => {
-  const value = useContext(TodosLoadingContext);
-
-  if (!value) {
-    throw new Error('Something is wrong with provider TodosLoadingContext');
   }
 
   return value;

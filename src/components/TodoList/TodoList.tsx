@@ -1,11 +1,10 @@
 import React from 'react';
 import { TodoItem } from '../TodoItem/TodoItem';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { useLoadingTodos, useTodos } from '../../TodoContext';
+import { useTodos } from '../../TodoContext';
 
 export const TodoList = React.memo(() => {
-  const { filteredTodos, tempTodo, isSubmitting } = useTodos();
-  const isLoading = useLoadingTodos();
+  const { filteredTodos, tempTodo, isLoading, isSubmitting } = useTodos();
 
   return (
     <section className="todoapp__main" data-cy="TodoList">
