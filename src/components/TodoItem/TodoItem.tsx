@@ -53,6 +53,10 @@ export const TodoItem: React.FC<Props> = ({ todo, isProcessed }) => {
     }
   };
 
+  const handleChangeNewTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(event.target.value);
+  };
+
   const handleEditTitleStart = () => {
     setIsEditinigTitle(true);
     setNewTitle(title);
@@ -94,7 +98,7 @@ export const TodoItem: React.FC<Props> = ({ todo, isProcessed }) => {
             className="todo__title-field"
             placeholder="Empty todo will be deleted"
             value={newTitle}
-            onChange={e => setNewTitle(e.currentTarget.value)}
+            onChange={handleChangeNewTitle}
             ref={inputElement}
             autoFocus
             onBlur={handleEditTitleSave}

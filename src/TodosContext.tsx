@@ -49,7 +49,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
 
   const filteredTodos = getFilteredTodos(todos, filterStatus);
 
-  const handleChangeFilterStatus = useCallback(async (status: FilterStatus) => {
+  const handleChangeFilterStatus = useCallback((status: FilterStatus) => {
     setFilterStatus(status);
   }, []);
 
@@ -131,7 +131,6 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
       setIsLoading(prev => [...prev, id]);
 
       try {
-        // eslint-disable-next-line
         const todo = await todoService.updateTodo({
           id,
           title,
